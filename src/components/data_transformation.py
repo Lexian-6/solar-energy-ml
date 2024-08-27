@@ -33,7 +33,7 @@ class DataTransformation:
                 ]
             )
             
-            logging.info("Set up pipelines for both numerical columns.")
+            logging.info("Set up pipelines for all columns.")
             
             preprocessor = ColumnTransformer(
                 [("num_pipeline", num_pipeline, num_columns)]
