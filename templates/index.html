@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Power Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-cover bg-top flex flex-col min-h-screen bg-gray-100"
+    style="background-image: url('{{ url_for('static', filename='logos/juno_banner.jpg') }}');">
+    
+    <!-- Flex container to take up the full height -->
+    <div class="flex-grow flex items-center justify-center">
+        <div class="text-center bg-purple-100 bg-opacity-80 p-8 rounded-lg shadow-md w-full max-w-lg transform transition-transform duration-300 hover:scale-105">
+            <img src="{{ url_for('static', filename='logos/Juno.jpg') }}" alt="Logo" class="mx-auto mb-6 w-32 h-32">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Solar Power Predictor</h1>
+            <a href="{{ url_for('predict_datapoint') }}"
+                class="inline-block bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-transform transform hover:scale-105">Go
+                to Prediction Page</a>
+        </div>
+    </div>
+
+    <!-- Footer stays at the bottom -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p class="mb-4">Created by Juno</p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://github.com/Lexian-6" target="_blank" class="hover:text-gray-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.49v-1.72c-2.77.6-3.35-1.34-3.35-1.34-.46-1.17-1.11-1.48-1.11-1.48-.91-.62.07-.61.07-.61 1.01.07 1.55 1.04 1.55 1.04.9 1.54 2.35 1.1 2.93.85.09-.65.35-1.1.63-1.35-2.22-.25-4.56-1.12-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.26.1-2.62 0 0 .84-.27 2.75 1.02A9.585 9.585 0 0112 7.15c.85.01 1.7.11 2.5.32 1.91-1.29 2.75-1.02 2.75-1.02.55 1.36.2 2.37.1 2.62.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.7-4.57 4.95.36.31.67.91.67 1.84v2.73c0 .27.18.59.69.49A9.98 9.98 0 0022 12c0-5.52-4.48-10-10-10z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/junle-zhou-b802072aa/" target="_blank" class="hover:text-gray-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.98 3.5C3.87 3.5 3 4.38 3 5.5c0 1.12.87 2 1.98 2h.02c1.1 0 1.98-.88 1.98-2 0-1.12-.88-2-2-2zM3.44 8.69H6.5v11.29H3.44V8.69zM8.75 8.69h3v1.62c.42-.79 1.51-1.68 3.08-1.68 3.29 0 3.89 2.17 3.89 4.99v6.36h-3.08v-5.63c0-1.35-.02-3.08-1.88-3.08-1.89 0-2.18 1.47-2.18 2.98v5.73H8.75V8.69z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@junle.zhou.love" target="_blank" class="hover:text-gray-400">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.246 4.9A2.473 2.473 0 0016.636 4H7.364c-.598 0-1.17.2-1.61.6-.28.266-.507.6-.657.97l-.098.257v11.446a2.48 2.48 0 00.755 1.865c.44.4 1.012.6 1.61.6h9.272c.598 0 1.17-.2 1.61-.6a2.482 2.482 0 00.755-1.865V6.727c-.013-.475-.112-.942-.29-1.37-.178-.427-.437-.816-.762-1.132zM7.996 8.256v7.83L4.88 9.414l3.116-1.158zm1.848.01l2.657 6.94 2.656-6.94H9.844zm4.307 7.82l3.149-5.682-3.15 1.172v4.51zm4.423-.81l-2.784-5.036 2.784-1.018V15.276zm-4.784-7.83h2.678l-3.105 7.065-2.416-7.065h2.843z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
