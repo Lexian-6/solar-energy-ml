@@ -63,7 +63,7 @@ jobs:
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
           
-  Continuous-Deployment:
+Continuous-Deployment:
     needs: build-and-push-ecr-image
     runs-on: self-hosted
     steps:
@@ -81,23 +81,22 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       
-      - name: Stop and remove container if running
+      - name: Clean up old images and containers
         run: |
-          docker ps -q --filter "name=${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}" | grep -q . && docker stop ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }} && docker rm -fv ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}
+          # Stop and remove the container if it's running
+          docker stop mltest || true
+          docker rm mltest || true
+          
+          # Remove all images related to your ECR repository
+          docker images | grep ${{ secrets.ECR_REPOSITORY_NAME }} | awk '{print $3}' | xargs -r docker rmi -f
+          
+          # Prune unused images, containers, networks, and volumes
+          docker system prune -af --volumes
 
-      - name: Remove old images
+      - name: Pull latest image
         run: |
-          docker image prune -f
-      
-      - name: Pull latest images
-        run: |
-          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
-
-
+         docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+         
       - name: Run Docker Image to serve users
         run: |
-          docker run -d -p 8080:8080 --ipc="host" --name=mltest -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}' ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
-
-      - name: Clean unused Docker resources
-        run: |
-          docker system prune -f
+         docker run -d -p 8080:8080 --ipc="host" --name=mltest -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
