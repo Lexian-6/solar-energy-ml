@@ -85,7 +85,7 @@ def select_features(df):
     df_selected = df[features + [target]]
 
     # Using mean
-    df_selected['WindSpeedAve_ms'].fillna(df_selected['WindSpeedAve_ms'].mean(), inplace=True)
+    df_selected['WindSpeedAve_ms'].fillna(method = 'bfill', inplace=True)
 
     # List of RTD columns
     rtd_columns = ['RTD_C_Avg_1', 'RTD_C_Avg_2', 'RTD_C_Avg_3', 'RTD_C_Avg_4', 'RTD_C_Avg_5', 
